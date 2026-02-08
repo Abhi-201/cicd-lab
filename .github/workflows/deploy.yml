@@ -33,6 +33,6 @@ jobs:
         run: |
           echo "Deploying to environment: ${{ inputs.environment }}"
             echo "App URL is: ${{secrets.APP_URL}}"
-          sleep 3
+          sleep 5
           echo "Deployment completed successfully for ${{ inputs.environment }}"
 
