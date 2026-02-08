@@ -1,0 +1,20 @@
+name: First CI pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print message
+        run: echo "Hello Roman! CI Pipeline is working"
+
+      - name: Show files
+        run: ls -l
