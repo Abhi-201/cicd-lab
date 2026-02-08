@@ -1,0 +1,44 @@
+name: Build and deploy using artifacts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build project
+        run: |
+          mkdir build
+          echo "Build created successfully!" > build/app.txt
+          echo "Build time: $(date)" >> build/app.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build/
+
+  deploy-job:
+    runs-on: ubuntu-latest
+    needs: build-job
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: downloaded_build/
+
+      - name: Deploy step
+        run: |
+          echo "Deploying files.."
+          ls -ltr downloaded_build/
+          cat downloaded_build/app.txt
+          echo "Deployment completed!"
