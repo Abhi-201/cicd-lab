@@ -23,7 +23,8 @@ jobs:
 
       - name: Deploy to selected environment
         run: |
-          echo "Deploying to environment: ${{inputs.environment}}"
-          echo "Starting deployment.."
+          echo "Deploying to environment: ${{ inputs.environment }}"
+          echo "Starting deployment..."
           sleep 3
-          echo "Deployment completed successfully! for ${{input.environment}}"
+          echo "Deployment completed successfully for ${{ inputs.environment }}"
+
