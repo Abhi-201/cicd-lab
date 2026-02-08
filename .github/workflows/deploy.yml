@@ -2,6 +2,16 @@ name: Manual Deploy Pipeline
 
 on:
   workflow_dispatch:
+    inputs:
+      enviroment:
+        description: "Choose environment to deploy"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
 
 jobs:
   deploy-job:
@@ -11,9 +21,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Simulate deployment
+      - name: Deploy to selected environment
         run: |
-          echo "Starting deployment..."
-          echo "Deployment Applcation.."
-          sleep 5
-          echo "Deployment completed successfully!"
+          echo "Deploying to enviroment: ${{inputs.environment}}"
+          echo "Starting deployment.."
+          sleep 3
+          echo "Deployment completed successfully! for ${{input.environment}}"
