@@ -15,7 +15,7 @@ jobs:
 
       - name: Build project
         run: |
-          echo "Hello from build job" > output.txt
+          echo "Hello from Build job" > output.txt
           date >> output.txt
 
       - name: Upload build artifact
