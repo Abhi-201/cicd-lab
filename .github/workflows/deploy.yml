@@ -23,10 +23,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Print environment secret
+        run: |
+          echo "Deploying to: ${{input.environment}}"
+          echo "App URL is: ${{secrets.APP_URL}}"
+
+
       - name: Deploy to selected environment
         run: |
           echo "Deploying to environment: ${{ inputs.environment }}"
-          echo "Starting deployment..."
+            echo "App URL is: ${{secrets.APP_URL}}"
           sleep 3
           echo "Deployment completed successfully for ${{ inputs.environment }}"
 
