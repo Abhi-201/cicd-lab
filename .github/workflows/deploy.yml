@@ -32,7 +32,7 @@ jobs:
       - name: Deploy to selected environment
         run: |
           echo "Deploying to environment: ${{ inputs.environment }}"
-            echo "App URL is: ${{secrets.APP_URL}}"
+          echo "App URL is: ${{secrets.APP_URL}}"
           sleep 5
           echo "Deployment completed successfully for ${{ inputs.environment }}"
 
