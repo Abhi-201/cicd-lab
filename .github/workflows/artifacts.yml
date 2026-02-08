@@ -1,0 +1,27 @@
+name: Build and store Artifact
+
+on: 
+push:
+  branches:
+    - main
+
+
+jobs:
+  build-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create build output
+        run: |
+          mkdir build
+          echo "Hello from CI/CD build pipeline" > build/app.txt
+          date >> build/app.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-build-artifact
+          path: build/
