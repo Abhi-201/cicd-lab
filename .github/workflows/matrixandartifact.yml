@@ -1,0 +1,29 @@
+name: Matrix and Artifact example
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [14, 16]
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build node project
+        run: |
+          echo "Building for node version ${{matrix.node}}" > build.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-${{matrix.node}}-build
+          path: build.txt

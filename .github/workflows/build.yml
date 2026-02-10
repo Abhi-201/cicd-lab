@@ -1,0 +1,25 @@
+name: Build and test workflow
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{inputs.node-version}}
+
+      - name: Build project
+        run: |
+          echo "Building project with node ${{inputs.node-version}}"
+  
