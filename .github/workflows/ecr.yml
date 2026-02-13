@@ -1,0 +1,40 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credential@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{secrets.AWS_REGION}}
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ${{secrets.AWS_REGION}} \
+          | docker login --username AWS --password-stdin \
+          ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.am          azonaws.com
+
+      - name: Build Docker Image
+        run: |
+          docker build -t cicd-practice .
+
+      - name: Tag Docker Image
+        run: |
+          docker tag cicd-practice:latest \
+        ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amaz        onaws.com/cicd-practice:latest
+
+      - name: Push Docker image
+        run: |
+          docker push \
+          ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amaz        onaws.com/cicd-practice:latest
